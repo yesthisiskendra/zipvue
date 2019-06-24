@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
+import ZipShow from "./views/ZipShow.vue";
 
 Vue.use(Router);
 
@@ -12,6 +13,12 @@ export default new Router({
       path: "/",
       name: "home",
       component: Home
+    },
+    {
+      path: "/zip/:zipcode",
+      name: "zipcode-show",
+      component: ZipShow,
+      props: true
     },
     {
       path: "/about",
