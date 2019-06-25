@@ -3,16 +3,19 @@
     <h3>For {{ zipcode }}</h3>
     <MonthChart />
     <YearChart />
+    <LineChart />
   </div>
 </template>
 
 <script>
 import MonthChart from "@/components/MonthChart.vue";
 import YearChart from "@/components/YearChart.vue";
+import LineChart from "@/components/LineChart.vue";
 export default {
   components: {
     MonthChart,
-    YearChart
+    YearChart,
+    LineChart
   },
   props: {
     zipcode: String
