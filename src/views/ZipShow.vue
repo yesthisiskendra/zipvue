@@ -1,21 +1,27 @@
 <template>
   <div>
     <h3>For {{ zipcode }}</h3>
+    <WeekChart />
     <MonthChart />
     <YearChart />
-    <LineChart />
+    <!-- <LineChart/>
+    <AreaChart/>-->
   </div>
 </template>
 
 <script>
+import WeekChart from "@/components/WeekChart.vue";
 import MonthChart from "@/components/MonthChart.vue";
 import YearChart from "@/components/YearChart.vue";
 import LineChart from "@/components/LineChart.vue";
+import AreaChart from "@/components/AreaChart.vue";
 export default {
   components: {
+    WeekChart,
     MonthChart,
     YearChart,
-    LineChart
+    LineChart,
+    AreaChart
   },
   props: {
     zipcode: String
@@ -26,7 +32,7 @@ export default {
     };
   },
   mounted() {
-    console.log("PROPS", this.zipcode);
+    // console.log("PROPS", this.zipcode);
   },
   methods: {
     onSubmit() {

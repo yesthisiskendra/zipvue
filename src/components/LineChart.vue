@@ -1,11 +1,14 @@
 <template>
   <div>
-    hello there!
-    <svg width="500" height="270">
-      <g style="transform: translate(0, 10px)">
-        <path :d="line"></path>
-      </g>
-    </svg>
+    <div v-if="loading">loading chart!</div>
+    <div v-else>
+      hello there!
+      <svg width="500" height="270">
+        <g style="transform: translate(0, 10px)">
+          <path :d="line"></path>
+        </g>
+      </svg>
+    </div>
   </div>
 </template>
 
@@ -15,12 +18,16 @@ export default {
   name: "vue-line-chart",
   data() {
     return {
-      data: [99, 71, 78, 25, 36, 92],
+      loading: false,
+      data: [],
       line: ""
     };
   },
   mounted() {
     this.calculatePath();
+  },
+  created() {
+    this.generateData();
   },
   methods: {
     getScales() {
@@ -39,6 +46,18 @@ export default {
         .x((d, i) => scale.x(i))
         .y(d => scale.y(d));
       this.line = path(this.data);
+    },
+    generateData() {
+      this.loading = true;
+      let monthData = [];
+      for (let i = 1; i < 32; i++) {
+        const [max, min] = [95, 75];
+        let temp = Math.floor(Math.random() * (+max - +min)) + +min;
+        monthData.push(temp);
+        // monthData.push([i.toString(), temp, 'LightSkyBlue', temp])
+      }
+      this.data = monthData;
+      this.loading = false;
     }
   }
 };

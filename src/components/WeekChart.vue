@@ -2,7 +2,7 @@
   <div>
     <div v-if="loading">loading chart!</div>
     <div v-else>
-      <h3>Month Data</h3>
+      <h3>Week Data</h3>
       <svg width="500" height="100">
         <g style="transform: translate(0, 10px)">
           <path :d="line"></path>
@@ -49,14 +49,14 @@ export default {
     },
     generateData() {
       this.loading = true;
-      let monthData = [];
-      for (let i = 1; i < 32; i++) {
+      let weekData = [];
+      for (let i = 1; i < 8; i++) {
         const [max, min] = [95, 75];
         let temp = Math.floor(Math.random() * (+max - +min)) + +min;
-        monthData.push(temp);
+        weekData.push(temp);
         // monthData.push([i.toString(), temp, 'LightSkyBlue', temp])
       }
-      this.data = monthData;
+      this.data = weekData;
       this.loading = false;
     }
   }
