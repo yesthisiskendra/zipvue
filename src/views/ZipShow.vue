@@ -4,8 +4,6 @@
     <WeekChart />
     <MonthChart />
     <YearChart />
-    <!-- <LineChart/>
-    <AreaChart/>-->
   </div>
 </template>
 
@@ -13,15 +11,11 @@
 import WeekChart from "@/components/WeekChart.vue";
 import MonthChart from "@/components/MonthChart.vue";
 import YearChart from "@/components/YearChart.vue";
-import LineChart from "@/components/LineChart.vue";
-import AreaChart from "@/components/AreaChart.vue";
 export default {
   components: {
     WeekChart,
     MonthChart,
-    YearChart,
-    LineChart,
-    AreaChart
+    YearChart
   },
   props: {
     zipcode: String
