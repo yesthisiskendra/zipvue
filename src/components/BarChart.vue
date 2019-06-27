@@ -20,7 +20,8 @@ export default {
   },
   data() {
     return {
-      theseTemps: []
+      theseTemps: [],
+      barChartDrawn: false
     };
   },
   mounted() {
@@ -30,6 +31,12 @@ export default {
     // this.doTheDamnThing();
   },
   updated() {
+    if (this.temps.length > 1 && !this.barChartDrawn) {
+      this.drawBarChart();
+      this.barChartDrawn = true;
+    } else {
+      console.log("still nothing");
+    }
     // this.drawBarChart();
   },
   // mounted() {
@@ -40,9 +47,6 @@ export default {
   //   // }
   //   // this.drawBarChart();
   // },
-  created() {
-    this.loadTemps();
-  },
   computed: {
     doTheDamnThing() {
       return this.$store.getters["/highTemp"];
@@ -58,19 +62,15 @@ export default {
       temps: state => state.temps
     })
   },
-  watch: {
-    doTheDamnThing: function() {
-      this.drawBarChart();
-    }
-  },
+
   methods: {
-    async loadTemps() {
-      // let theseTemps = await this.$store.dispatch("fetchTemps", "91103");
-      let theseTemps = this.$store.getters["/highTemp"]
-      console.log("THESE TEMPS", theseTemps);
-      this.theseTemps = theseTemps;
-      this.drawBarChart();
-    },
+    // async loadTemps() {
+    //   // let theseTemps = await this.$store.dispatch("fetchTemps", "91103");
+    //   let theseTemps = this.$store.getters["/highTemp"];
+    //   console.log("THESE TEMPS", theseTemps);
+    //   this.theseTemps = theseTemps;
+    //   this.drawBarChart();
+    // },
     drawBarChart() {
       console.log("drawing bar chart!");
       //Width and height
@@ -79,7 +79,7 @@ export default {
       var w = 500;
       var h = 250;
 
-      var dataset = this.theseTemps;
+      var dataset = this.temps;
       console.log("DATASET", dataset);
       var xScale = d3
         .scaleBand()
