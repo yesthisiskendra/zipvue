@@ -12,6 +12,13 @@
     <a :href="kittylink" target="_blank">
       <h6>of the Michael Scott Kitten Co</h6>
     </a>
+    <div>. . .</div>
+    <h4>See the Experiment in React:</h4>
+    <h5>
+      <a :href="reactapp" target="_blank">APP</a> |
+      <a :href="reactcode" target="_blank">CODE</a> |
+      <a :href="prototype" target="_blank">V1</a>
+    </h5>
   </div>
 </template>
 <script>
@@ -20,7 +27,11 @@ export default {
   data() {
     return {
       githublink: "https://github.com/yesthisiskendra?tab=repositories",
-      kittylink: "https://www.instagram.com/michaelscottkittenco/"
+      kittylink: "https://www.instagram.com/michaelscottkittenco/",
+      reactapp:
+        "http://wereacttotheweather.s3-website-us-west-2.amazonaws.com/",
+      reactcode: "https://github.com/yesthisiskendra/wereacttoweather",
+      prototype: "http://getthegist.s3-website-us-west-2.amazonaws.com/91103"
     };
   },
   computed: {
