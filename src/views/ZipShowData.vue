@@ -1,0 +1,43 @@
+<template>
+  <div>
+    <h3>For {{ zipcode }}</h3>
+    <div v-if="!temps">
+      <p>loading</p>
+    </div>
+
+    <BarChart />
+
+    <!-- <TimeChart /> -->
+  </div>
+</template>
+
+<script>
+import BarChart from "@/components/BarChart.vue";
+import TimeChart from "@/components/TimeChart.vue";
+import ZipService from "@/services/ZipService.js";
+import { mapState, mapActions } from "vuex";
+export default {
+  props: {
+    zipcode: String
+  },
+  components: {
+    BarChart,
+    TimeChart
+  },
+  created() {
+    // this.fetchEvent(this.id);
+    this.$store.dispatch("fetchTemps", "91103");
+    this.showMeData();
+  },
+  computed: mapState({
+    // event: state => state.event.event,
+    temps: state => state.temps
+  }),
+  methods: {
+    showMeData() {
+      console.log("smd", this.temps);
+    },
+    ...mapActions("temps", ["fetchTemps"])
+  }
+};
+</script>

@@ -1,18 +1,15 @@
 <template>
   <div>
-    <div v-if="!temps">
-      <h3>Bar Data</h3>
-    </div>
+    <div v-if="barData.length < 1">loading chart!</div>
     <div v-else>
+      <h3>Bar Data</h3>
       <p></p>
     </div>
-    <ul>
-      <li v-for="temp in temps">{{ temp }}</li>
-    </ul>
   </div>
 </template>
 <script>
 import * as d3 from "d3";
+import ZipService from "@/services/ZipService.js";
 import { mapState, mapActions } from "vuex";
 export default {
   props: {
@@ -20,66 +17,70 @@ export default {
   },
   data() {
     return {
-      theseTemps: []
+      loading: false,
+      barData: []
     };
   },
   mounted() {
-    // this.fetchEvent(this.id);
-
-    this.showMeData();
-    // this.doTheDamnThing();
-  },
-  updated() {
+    console.log("mounted called 1");
     // this.drawBarChart();
-  },
-  // mounted() {
-  //   // if (this.yearData.length < 1) {
-  //   //   console.log("not yet");
-  //   // } else {
-  //   //   this.drawBarChart();
-  //   // }
-  //   // this.drawBarChart();
-  // },
-  created() {
-    this.loadTemps();
-  },
-  computed: {
-    doTheDamnThing() {
-      return this.$store.getters["/highTemp"];
-      // return this.$store.dispatch("fetchTemps", "91103");
-      // if (this.temps.length < 1) {
-      //   console.log("not yet again");
-      // } else {
-      //   this.drawBarChart();
-      // }
-    },
-    ...mapState({
-      // event: state => state.event.event,
-      temps: state => state.temps
-    })
-  },
-  watch: {
-    doTheDamnThing: function() {
-      this.drawBarChart();
+    this.logit();
+    console.log("mounted called2");
+    if (this.yearData.length < 1) {
+      console.log("no data yet");
+    } else {
+      console.log("yes data", this.yearData);
     }
   },
+  created() {
+    this.$store.dispatch("fetchTemps", "91103");
+    this.drawBarChart();
+    // ZipService.getStations()
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     console.log(data);
+    //   })
+    //   .catch(error => {
+    //     console.log("error", error);
+    //   });
+    // ZipService.getHigh("91103", "2009-05-01", "2009-05-31")
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     data.results.forEach(element => {
+    //       console.log("element", element.value);
+    //       this.barData.push(element.value);
+    //     });
+    //     this.drawBarChart();
+    //     console.log(typeof data);
+    //     console.log(data);
+    //   })
+    //   .catch(error => {
+    //     console.log("error", error);
+    //   });
+  },
+  computed: mapState({
+    event: state => state.event.event
+  }),
   methods: {
-    async loadTemps() {
-      // let theseTemps = await this.$store.dispatch("fetchTemps", "91103");
-      let theseTemps = this.$store.getters["/highTemp"]
-      console.log("THESE TEMPS", theseTemps);
-      this.theseTemps = theseTemps;
-      this.drawBarChart();
+    logit() {
+      this.loading = true;
+      console.log("**********************");
+      console.log(this.yearData);
+      this.loading = false;
+      if (this.yearData.length < 1) {
+        console.log("not yet");
+      } else {
+        console.log("logit");
+        this.barData = this.yearData;
+      }
     },
-    drawBarChart() {
-      console.log("drawing bar chart!");
+    async drawBarChart() {
       //Width and height
-      // await
-      // console.log("draw bar chart", this.yearData);
+      console.log("draw bar chart", this.yearData);
       var w = 500;
       var h = 250;
 
-      var dataset = this.theseTemps;
+      var dataset = await this.yearData;
       console.log("DATASET", dataset);
       var xScale = d3
         .scaleBand()
@@ -140,10 +141,7 @@ export default {
         .attr("font-size", "11px")
         .attr("fill", "white");
     },
-    showMeData() {
-      console.log("smd", this.temps);
-    },
-    ...mapActions("temps", ["fetchTemps"])
+    ...mapActions("event", ["fetchEvent"])
   }
 };
 </script>

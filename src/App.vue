@@ -2,10 +2,12 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link>|
-      <router-link to="/about">About</router-link>
+      <router-link to="/about">About</router-link>|
+      <router-link to="/zip/91103">Pretty</router-link>|
+      <router-link to="/withdata/91103">With Data</router-link>
     </div>
     <h1>Historical Weather Data</h1>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 

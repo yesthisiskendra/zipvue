@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     getScales() {
-      const x = d3.scaleTime().range([0, 430]);
+      const x = d3.scaleTime().range([0, 500]);
       const y = d3.scaleLinear().range([210, 0]);
       d3.axisLeft().scale(x);
       d3.axisBottom().scale(y);
