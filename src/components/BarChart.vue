@@ -6,17 +6,22 @@
     <div v-else>
       <p></p>
     </div>
-    <ul>
-      <li v-for="temp in temps">{{ temp }}</li>
+    <!-- <ul v-if="highTemps">
+      <li v-for="htemp in highTemps">{{ htemp }}</li>
     </ul>
+    <h4>TMAX</h4>
+    {{ getTemps("TMAX") }}
+    <h4>TMIN</h4>
+    {{ getTemps("TMIN") }}-->
   </div>
 </template>
 <script>
 import * as d3 from "d3";
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 export default {
   props: {
-    yearData: Array
+    yearData: Array,
+    timeline: String
   },
   data() {
     return {
@@ -24,63 +29,28 @@ export default {
       barChartDrawn: false
     };
   },
-  mounted() {
-    // this.fetchEvent(this.id);
-
-    this.showMeData();
-    // this.doTheDamnThing();
-  },
   updated() {
+    // SOS: How to do this the Vue way!?
+    // I played around with a few different ways to handle this...
+    // Pretty sure this goes AGAINST convention but totally not sure how to do it the "correct" way
     if (this.temps.length > 1 && !this.barChartDrawn) {
       this.drawBarChart();
       this.barChartDrawn = true;
     } else {
-      console.log("still nothing");
+      console.log("I can't wait to learn how to do this the proper way!!");
     }
-    // this.drawBarChart();
   },
-  // mounted() {
-  //   // if (this.yearData.length < 1) {
-  //   //   console.log("not yet");
-  //   // } else {
-  //   //   this.drawBarChart();
-  //   // }
-  //   // this.drawBarChart();
-  // },
   computed: {
-    doTheDamnThing() {
-      return this.$store.getters["/highTemp"];
-      // return this.$store.dispatch("fetchTemps", "91103");
-      // if (this.temps.length < 1) {
-      //   console.log("not yet again");
-      // } else {
-      //   this.drawBarChart();
-      // }
-    },
-    ...mapState({
-      // event: state => state.event.event,
-      temps: state => state.temps
-    })
+    ...mapGetters(["getTemps", "getAverage"]),
+    ...mapState(["temps"])
   },
-
   methods: {
-    // async loadTemps() {
-    //   // let theseTemps = await this.$store.dispatch("fetchTemps", "91103");
-    //   let theseTemps = this.$store.getters["/highTemp"];
-    //   console.log("THESE TEMPS", theseTemps);
-    //   this.theseTemps = theseTemps;
-    //   this.drawBarChart();
-    // },
     drawBarChart() {
-      console.log("drawing bar chart!");
-      //Width and height
-      // await
-      // console.log("draw bar chart", this.yearData);
+      // console.log(this.highTemps);
       var w = 500;
       var h = 250;
 
-      var dataset = this.temps;
-      console.log("DATASET", dataset);
+      var dataset = this.getTemps("TMAX");
       var xScale = d3
         .scaleBand()
         .domain(d3.range(dataset.length))
@@ -116,8 +86,9 @@ export default {
           return yScale(d);
         })
         .attr("fill", function(d) {
-          console.log("*********************", d);
-          return "rgb(0, 0, " + Math.round(d * 2.56) + ")";
+          let fill = (d - 60) * 10;
+          return "rgb(0, " + Math.round(fill) + ",256)";
+          // return "rgb(0, 0, " + Math.round(fill) + ")";
         });
 
       //Create labels
@@ -138,10 +109,7 @@ export default {
         })
         .attr("font-family", "sans-serif")
         .attr("font-size", "11px")
-        .attr("fill", "white");
-    },
-    showMeData() {
-      console.log("smd", this.temps);
+        .attr("fill", "navy");
     },
     ...mapActions("temps", ["fetchTemps"])
   }

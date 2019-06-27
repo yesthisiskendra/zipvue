@@ -5,7 +5,7 @@
       <p>loading</p>
     </div>
 
-    <BarChart />
+    <BarChart/>
 
     <!-- <TimeChart /> -->
   </div>
@@ -27,16 +27,12 @@ export default {
   created() {
     // this.fetchEvent(this.id);
     this.$store.dispatch("fetchTemps", "91103");
-    this.showMeData();
   },
   computed: mapState({
     // event: state => state.event.event,
     temps: state => state.temps
   }),
   methods: {
-    showMeData() {
-      console.log("smd", this.temps);
-    },
     ...mapActions("temps", ["fetchTemps"])
   }
 };

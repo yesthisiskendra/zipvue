@@ -7,17 +7,17 @@ export const namespaced = true;
 export default new Vuex.Store({
   state: {
     temps: [],
-    user: { id: "abc123", name: "Kendra" },
+    fulltemps: [],
+    user: { id: "12", name: "Kendra" },
     date: { day: "01", month: "06", year: "2018" },
     zipcode: 91011,
     categories: [
-      "sustainability",
-      "nature",
-      "animal welfare",
-      "housing",
-      "education",
-      "food",
-      "community"
+      "Michael Scott",
+      "Dwight",
+      "Phyllis",
+      "Angela",
+      "Kevin",
+      "Stanley"
     ],
     todos: [
       { id: 1, text: "...", done: true },
@@ -29,22 +29,16 @@ export default new Vuex.Store({
   mutations: {
     SET_TEMPS(state, temps) {
       state.temps = temps.map(temp => temp.value);
+      state.fulltemps = temps.map(temp => temp);
       // state.events.find(event => event.id === id)
     }
   },
   actions: {
     fetchTemps({ commit }, zip) {
-      ZipService.getHigh("91103", "2009-05-01", "2009-05-31")
+      ZipService.getHighAndLow("91103", "2009-05-01", "2009-05-31")
         .then(res => res.json())
         .then(data => {
           commit("SET_TEMPS", data.results);
-          // data.results.forEach(element => {
-          //   console.log("element", element.value);
-          //   this.allYearData.push(element.value);
-          // });
-          // this.drawBarChart();
-          // console.log(typeof data);
-          // console.log(data);
         })
         .catch(error => {
           console.log("error", error);
@@ -58,8 +52,26 @@ export default new Vuex.Store({
     doneTodos: state => {
       return state.todos.filter(todo => todo.done);
     },
-    highTemp: state => {
-      return state.temps.filter(temp => temp.TMAX);
+    getTemps: state => datatype => {
+      // console.log("DATATYPE", datatype);
+      let filteredTemps = state.fulltemps.filter(
+        temp => temp.datatype === datatype
+      );
+      return filteredTemps.map(temp => temp.value);
+      // console.log("HIGH TEMPS", temp.datatype)
+    },
+    getAverage: state => {
+      let dataArray = [["date", "high temp", "average temp", "low temp"]];
+      state.fulltemps.forEach(function(value) {
+        const cleanDate = value.date.split("T")[0].split("-")[2];
+        if (dataArray[dataArray.length - 1][0] === cleanDate) {
+          let average = (dataArray[dataArray.length - 1][1] + value.value) / 2;
+          dataArray[dataArray.length - 1].push(average, value.value);
+        } else {
+          dataArray.push([cleanDate, value.value]);
+        }
+      });
+      return dataArray;
     }
   }
 });

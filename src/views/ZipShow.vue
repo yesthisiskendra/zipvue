@@ -1,9 +1,9 @@
 <template>
   <div>
     <h3>For {{ zipcode }}</h3>
-    <WeekChart />
-    <MonthChart />
-    <YearChart />
+    <WeekChart/>
+    <MonthChart/>
+    <YearChart/>
   </div>
 </template>
 
@@ -62,13 +62,13 @@ export default {
       return yearData;
     },
     async getYearData(year) {
-      console.log(year);
+      // console.log(year);
       const generatedYearData = await this.generateYearData(year);
       return generatedYearData;
     },
     async getUpdatedData(year) {
       this.myYearData = await this.getYearData(year);
-      console.log("M Y D", this.myYearData);
+      // console.log("M Y D", this.myYearData);
     }
   }
 };

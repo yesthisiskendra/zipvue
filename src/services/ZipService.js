@@ -38,7 +38,7 @@ export default {
     // return apiWeatherClient.get('')
   },
   getHighAndLow(zip, start, end) {
-    console.log("GET HIGH AND LOW");
+    // console.log("GET HIGH AND LOW");
     const url =
       "https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&locationid=ZIP:" +
       zip +
@@ -47,34 +47,6 @@ export default {
       "&enddate=" +
       end +
       "&limit=100&units=standard&datatypeid=TMAX&datatypeid=TMIN";
-    return fetch(url, {
-      headers: { token: "lcgEHOgrtMIIEUdSQGVKZUQYUJHvGnvt" }
-    });
-  },
-  getHigh(zip, start, end) {
-    console.log("GET HIGH");
-    const url =
-      "https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&locationid=ZIP:" +
-      zip +
-      "&startdate=" +
-      start +
-      "&enddate=" +
-      end +
-      "&limit=100&units=standard&datatypeid=TMAX";
-    return fetch(url, {
-      headers: { token: "lcgEHOgrtMIIEUdSQGVKZUQYUJHvGnvt" }
-    });
-  },
-  getYear(zip, start, end) {
-    console.log("GET HIGH");
-    const url =
-      "https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&locationid=ZIP:" +
-      zip +
-      "&startdate=" +
-      start +
-      "&enddate=" +
-      end +
-      "&limit=400&units=standard&datatypeid=TMAX";
     return fetch(url, {
       headers: { token: "lcgEHOgrtMIIEUdSQGVKZUQYUJHvGnvt" }
     });
