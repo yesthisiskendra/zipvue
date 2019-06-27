@@ -5,7 +5,7 @@
       <p>loading</p>
     </div>
 
-    <BarChart/>
+    <BarChart />
 
     <!-- <TimeChart /> -->
   </div>
@@ -13,7 +13,7 @@
 
 <script>
 import BarChart from "@/components/BarChart.vue";
-import TimeChart from "@/components/TimeChart.vue";
+// import TimeChart from "@/components/TimeChart.vue";
 import ZipService from "@/services/ZipService.js";
 import { mapState, mapActions } from "vuex";
 export default {
@@ -21,8 +21,7 @@ export default {
     zipcode: String
   },
   components: {
-    BarChart,
-    TimeChart
+    BarChart
   },
   created() {
     // this.fetchEvent(this.id);
