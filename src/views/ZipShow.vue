@@ -1,24 +1,18 @@
 <template>
   <div>
     <h3>For {{ zipcode }}</h3>
-    <WeekChart/>
-    <MonthChart/>
-    <YearChart/>
+    <LineChart title="Week Chart" numdays="8"/>
+    <LineChart title="Month Chart" numdays="32"/>
+    <LineChart title="Year Chart" numdays="366"/>
   </div>
 </template>
 
 <script>
-import WeekChart from "@/components/WeekChart.vue";
-import MonthChart from "@/components/MonthChart.vue";
-import YearChart from "@/components/YearChart.vue";
+import LineChart from "@/components/LineChart.vue";
+import { mapState } from "vuex";
 export default {
   components: {
-    WeekChart,
-    MonthChart,
-    YearChart
-  },
-  props: {
-    zipcode: String
+    LineChart
   },
   data() {
     return {
@@ -26,14 +20,14 @@ export default {
       myYearData: []
     };
   },
-  mounted() {
-    this.getUpdatedData("2018");
-    // console.log("PROPS", this.zipcode);
+  // mounted() {
+  //   this.getUpdatedData("2018");
+  //   // console.log("PROPS", this.zipcode);
+  // },
+  computed: {
+    ...mapState(["zipcode"])
   },
   methods: {
-    onSubmit() {
-      window.location.href = "/zip/" + this.zipcode;
-    },
     getTemp() {
       const [max, min] = [95, 75];
       let temp = Math.floor(Math.random() * (+max - +min)) + +min;
